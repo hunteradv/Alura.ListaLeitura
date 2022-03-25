@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -6,31 +6,31 @@ namespace Alura.ListaLeitura.App.Negocio
 {
     public class ReadList
     {
-        private List<Book> _livros;
+        private List<Book> _books;
 
-        public ReadList(string titulo, params Book[] livros)
+        public ReadList(string title, params Book[] books)
         {
-            Titulo = titulo;
-            _livros = livros.ToList();
-            _livros.ForEach(l => l.Lista = this);
+            Title = title;
+            _books = books.ToList();
+            _books.ForEach(l => l.Lista = this);
         }
 
-        public string Titulo { get; set; }
+        public string Title { get; set; }
         public IEnumerable<Book> Books
         {
-            get { return _livros; }
+            get { return _books; }
         }
 
         public override string ToString()
         {
-            var linhas = new StringBuilder();
-            linhas.AppendLine(Titulo);
-            linhas.AppendLine("=========");
-            foreach (var livro in Books)
+            var lines = new StringBuilder();
+            lines.AppendLine(Title);
+            lines.AppendLine("=========");
+            foreach (var book in Books)
             {
-                linhas.AppendLine(livro.ToString());
+                lines.AppendLine(book.ToString());
             }
-            return linhas.ToString();
+            return lines.ToString();
         }
     }
 }

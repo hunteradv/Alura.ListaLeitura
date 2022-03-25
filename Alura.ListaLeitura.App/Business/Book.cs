@@ -16,7 +16,7 @@ namespace Alura.ListaLeitura.App.Negocio
             stringBuilder.AppendLine("=====");
             stringBuilder.AppendLine($"Título: {Title}");
             stringBuilder.AppendLine($"Autor: {Author}");
-            stringBuilder.AppendLine($"Lista: {Lista.Titulo}");
+            stringBuilder.AppendLine($"Lista: {Lista.Title}");
             return stringBuilder.ToString();
         }
 
