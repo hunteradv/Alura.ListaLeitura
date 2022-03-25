@@ -16,18 +16,20 @@ namespace Alura.ListaLeitura.App
         public Task Routing (HttpContext context)
         {
             var repo = new BookRepositoryCSV();
-            var servedPaths = new Dictionary<string, string>
+            var servedPaths = new Dictionary<string, RequestDelegate>
             {
-                { "/Livros/ParaLer", repo.ToRead.ToString() },
-                { "/Livros/Lendo", repo.Reading.ToString() },
-                { "/Livros/Lidos", repo.AlreadyRead.ToString() }
+                { "/Livros/ParaLer", BooksToRead },
+                { "/Livros/Lendo", BooksReading },
+                { "/Livros/Lidos", BooksAlreadyRead }
             };
             
             if (servedPaths.ContainsKey(context.Request.Path))
             {
-                return context.Response.WriteAsync(servedPaths[context.Request.Path]);
+                var method = servedPaths[context.Request.Path];
+                return method.Invoke(context);
             }
 
+            context.Response.StatusCode = 404;
             return context.Response.WriteAsync("404 - Caminho inexistente");
         }
 
@@ -35,6 +37,18 @@ namespace Alura.ListaLeitura.App
         {
             var repo = new BookRepositoryCSV();
             return context.Response.WriteAsync(repo.ToRead.ToString());            
+        }
+
+        public Task BooksReading(HttpContext context)
+        {
+            var repo = new BookRepositoryCSV();
+            return context.Response.WriteAsync(repo.Reading.ToString());
+        }
+
+        public Task BooksAlreadyRead(HttpContext context)
+        {
+            var repo = new BookRepositoryCSV();
+            return context.Response.WriteAsync(repo.AlreadyRead.ToString());
         }
     }
 }
