@@ -1,6 +1,8 @@
 ﻿using Alura.ListaLeitura.App.Repositorio;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,9 +10,22 @@ namespace Alura.ListaLeitura.App
 {
     public class Startup
     {
+        public void ConfigureServices(IServiceCollection services)
+        {            
+            services.AddRouting();
+        }
+
         public void Configure(IApplicationBuilder app)
         {
-            app.Run(Routing);
+            var builder = new RouteBuilder(app);
+            builder.MapRoute("Livros/ParaLer", BooksToRead);
+            builder.MapRoute("Livros/Lendo", BooksReading);
+            builder.MapRoute("Livros/Lidos", BooksAlreadyRead);
+            var routes = builder.Build();
+
+            app.UseRouter(routes);
+
+            //app.Run(Routing);
         }
 
         public Task Routing (HttpContext context)
