@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Alura.ListaLeitura.App
@@ -24,11 +25,20 @@ namespace Alura.ListaLeitura.App
             builder.MapRoute("Livros/Lendo", BooksReading);
             builder.MapRoute("Livros/Lidos", BooksAlreadyRead);
             builder.MapRoute("Cadastro/NovoLivro/{name}/{author}", NewBookToRead);
+            builder.MapRoute("Livros/Detalhes/{id:int}", ShowDetails);
             var routes = builder.Build();
 
             app.UseRouter(routes);
 
             //app.Run(Routing);
+        }
+
+        private Task ShowDetails(HttpContext context)
+        {
+            int id = Convert.ToInt32(context.GetRouteValue("id"));
+            var repo = new BookRepositoryCSV();
+            var book = repo.All.First(l => l.Id == id);
+            return context.Response.WriteAsync(book.Details());
         }
 
         public Task NewBookToRead(HttpContext context)

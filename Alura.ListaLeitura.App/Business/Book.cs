@@ -7,16 +7,16 @@ namespace Alura.ListaLeitura.App.Negocio
         public int Id { get; set; }    
         public string Title { get; set; }
         public string Author { get; set; }
-        public ReadList Lista { get; set; }
+        public ReadList List { get; set; }
 
-        public string Detalhes()
+        public string Details()
         {
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("Detalhes do Livro");
             stringBuilder.AppendLine("=====");
             stringBuilder.AppendLine($"Título: {Title}");
             stringBuilder.AppendLine($"Autor: {Author}");
-            stringBuilder.AppendLine($"Lista: {Lista.Title}");
+            stringBuilder.AppendLine($"Lista: {List.Title}");
             return stringBuilder.ToString();
         }
 

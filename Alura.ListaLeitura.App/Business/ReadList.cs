@@ -12,7 +12,7 @@ namespace Alura.ListaLeitura.App.Negocio
         {
             Title = title;
             _books = books.ToList();
-            _books.ForEach(l => l.Lista = this);
+            _books.ForEach(l => l.List = this);
         }
 
         public string Title { get; set; }
