@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,11 +27,41 @@ namespace Alura.ListaLeitura.App
             builder.MapRoute("Livros/Lidos", BooksAlreadyRead);
             builder.MapRoute("Cadastro/NovoLivro/{name}/{author}", NewBookToRead);
             builder.MapRoute("Livros/Detalhes/{id:int}", ShowDetails);
+            builder.MapRoute("Cadastro/NovoLivro", ShowForm);
+            builder.MapRoute("Cadastro/Incluir", ProcessForm);
             var routes = builder.Build();
 
             app.UseRouter(routes);
 
             //app.Run(Routing);
+        }
+
+        private Task ProcessForm(HttpContext context)
+        {
+            var book = new Book()
+            {
+                Title = context.Request.Form["title"].First(),
+                Author = context.Request.Form["author"].First(),
+            };
+
+            var repo = new BookRepositoryCSV();
+            repo.Include(book);
+            return context.Response.WriteAsync("O livro foi incluido com sucesso!");
+        }
+
+        private Task ShowForm(HttpContext context)
+        {
+            var html = LoadFileHTML("form");
+            return context.Response.WriteAsync(html);
+        }
+
+        private string LoadFileHTML(string fileName)
+        {
+            var fileCompleteName = $"HTML/{fileName}.html";
+            using (var file = File.OpenText(fileCompleteName))
+            {
+                return file.ReadToEnd();
+            }
         }
 
         private Task ShowDetails(HttpContext context)
