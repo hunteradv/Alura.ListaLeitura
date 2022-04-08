@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Alura.ListaLeitura.App.Negocio;
+﻿using Alura.ListaLeitura.App.Business;
+using System.Collections.Generic;
 
-namespace Alura.ListaLeitura.App.Repositorio
+namespace Alura.ListaLeitura.App.Repository
 {
     public class BookFakeRepository : IBookRepository
     {

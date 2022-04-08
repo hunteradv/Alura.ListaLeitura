@@ -53,24 +53,7 @@ namespace Alura.ListaLeitura.App
         {
             var html = LoadFileHTML("form");
             return context.Response.WriteAsync(html);
-        }
-
-        private string LoadFileHTML(string fileName)
-        {
-            var fileCompleteName = $"HTML/{fileName}.html";
-            using (var file = File.OpenText(fileCompleteName))
-            {
-                return file.ReadToEnd();
-            }
-        }
-
-        private Task ShowDetails(HttpContext context)
-        {
-            int id = Convert.ToInt32(context.GetRouteValue("id"));
-            var repo = new BookRepositoryCSV();
-            var book = repo.All.First(l => l.Id == id);
-            return context.Response.WriteAsync(book.Details());
-        }
+        }           
 
         public Task NewBookToRead(HttpContext context)
         {
@@ -85,42 +68,6 @@ namespace Alura.ListaLeitura.App
             return context.Response.WriteAsync("O livro foi incluido com sucesso!");
         }
 
-        public Task Routing (HttpContext context)
-        {
-            var repo = new BookRepositoryCSV();
-            var servedPaths = new Dictionary<string, RequestDelegate>
-            {
-                { "/Livros/ParaLer", BooksToRead },
-                { "/Livros/Lendo", BooksReading },
-                { "/Livros/Lidos", BooksAlreadyRead }
-            };
-            
-            if (servedPaths.ContainsKey(context.Request.Path))
-            {
-                var method = servedPaths[context.Request.Path];
-                return method.Invoke(context);
-            }
-
-            context.Response.StatusCode = 404;
-            return context.Response.WriteAsync("404 - Caminho inexistente");
-        }
-
-        public Task BooksToRead(HttpContext context)
-        {
-            var repo = new BookRepositoryCSV();
-            return context.Response.WriteAsync(repo.ToRead.ToString());            
-        }
-
-        public Task BooksReading(HttpContext context)
-        {
-            var repo = new BookRepositoryCSV();
-            return context.Response.WriteAsync(repo.Reading.ToString());
-        }
-
-        public Task BooksAlreadyRead(HttpContext context)
-        {
-            var repo = new BookRepositoryCSV();
-            return context.Response.WriteAsync(repo.AlreadyRead.ToString());
-        }
+        
     }
 }

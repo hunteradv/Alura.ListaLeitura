@@ -4,8 +4,9 @@ using System.Text;
 using Alura.ListaLeitura.App.Negocio;
 using System.IO;
 using System.Linq;
+using Alura.ListaLeitura.App.Business;
 
-namespace Alura.ListaLeitura.App.Repositorio
+namespace Alura.ListaLeitura.App.Repository
 {
     public class BookRepositoryCSV : IBookRepository
     {
