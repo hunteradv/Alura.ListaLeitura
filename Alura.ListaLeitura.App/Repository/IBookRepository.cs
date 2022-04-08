@@ -1,5 +1,4 @@
 ﻿using Alura.ListaLeitura.App.Business;
-using Alura.ListaLeitura.App.Negocio;
 using System.Collections.Generic;
 
 namespace Alura.ListaLeitura.App.Repository
