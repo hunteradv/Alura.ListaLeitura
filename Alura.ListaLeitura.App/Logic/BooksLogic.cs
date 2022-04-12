@@ -12,7 +12,7 @@ namespace Alura.ListaLeitura.App.Logic
 {
     public class BooksLogic
     {
-        public static Task ShowDetails(HttpContext context)
+        public static Task Details(HttpContext context)
         {
             int id = Convert.ToInt32(context.GetRouteValue("id"));
             var repo = new BookRepositoryCSV();
@@ -31,7 +31,7 @@ namespace Alura.ListaLeitura.App.Logic
             return fileContent.Replace("#NEW-ITEM#", "");
         }
 
-        public static Task BooksToRead(HttpContext context)
+        public static Task ToRead(HttpContext context)
         {
             var repo = new BookRepositoryCSV();
             var html = LoadList(repo.ToRead.Books);
@@ -39,13 +39,13 @@ namespace Alura.ListaLeitura.App.Logic
             return context.Response.WriteAsync(html);
         }
 
-        public static Task BooksReading(HttpContext context)
+        public static Task Reading(HttpContext context)
         {
             var repo = new BookRepositoryCSV();
             return context.Response.WriteAsync(repo.Reading.ToString());
         }
 
-        public static Task BooksAlreadyRead(HttpContext context)
+        public static Task AlreadyRead(HttpContext context)
         {
             var repo = new BookRepositoryCSV();
             return context.Response.WriteAsync(repo.AlreadyRead.ToString());

@@ -15,13 +15,13 @@ namespace Alura.ListaLeitura.App
         public void Configure(IApplicationBuilder app)
         {
             var builder = new RouteBuilder(app);
-            builder.MapRoute("Livros/ParaLer", BooksLogic.BooksToRead);
-            builder.MapRoute("Livros/Lendo", BooksLogic.BooksReading);
-            builder.MapRoute("Livros/Lidos", BooksLogic.BooksAlreadyRead);
-            builder.MapRoute("Cadastro/NovoLivro/{name}/{author}", IncludeLogic.NewBookToRead);
-            builder.MapRoute("Livros/Detalhes/{id:int}", BooksLogic.ShowDetails);
-            builder.MapRoute("Cadastro/NovoLivro", IncludeLogic.ShowForm);
-            builder.MapRoute("Cadastro/Incluir", IncludeLogic.ProcessForm);
+            builder.MapRoute("Livros/ParaLer", BooksLogic.ToRead);
+            builder.MapRoute("Livros/Lendo", BooksLogic.Reading);
+            builder.MapRoute("Livros/Lidos", BooksLogic.AlreadyRead);
+            builder.MapRoute("Cadastro/NovoLivro/{name}/{author}", IncludeLogic.NewBook);
+            builder.MapRoute("Livros/Detalhes/{id:int}", BooksLogic.Details);
+            builder.MapRoute("Cadastro/ExibeFormulario", IncludeLogic.ShowForm);
+            builder.MapRoute("Cadastro/Incluir", IncludeLogic.Insert);
             var routes = builder.Build();
 
             app.UseRouter(routes);
