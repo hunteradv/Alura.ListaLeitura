@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Alura.ListaLeitura.App.Logic
 {
-    public class IncludeLogic
+    public class IncludeController
     {      
         public static Task Insert(HttpContext context)
         {
