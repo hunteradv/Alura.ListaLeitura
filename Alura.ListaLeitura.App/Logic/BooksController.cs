@@ -12,12 +12,11 @@ namespace Alura.ListaLeitura.App.Logic
 {
     public class BooksController
     {
-        public static Task Details(HttpContext context)
-        {
-            int id = Convert.ToInt32(context.GetRouteValue("id"));
+        public string Details(int id)
+        {            
             var repo = new BookRepositoryCSV();
             var book = repo.All.First(l => l.Id == id);
-            return context.Response.WriteAsync(book.Details());
+            return book.Details();
         }
 
         private static string LoadList(IEnumerable<Book> books)
