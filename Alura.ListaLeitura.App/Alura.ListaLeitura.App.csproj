@@ -17,8 +17,8 @@
     <None Update="Views\Include\form.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Views\to-read.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    <None Update="Views\Books\list.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Repository\Books.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -2,14 +2,16 @@
 using Alura.ListaLeitura.App.HTML;
 using Alura.ListaLeitura.App.Repository;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Alura.ListaLeitura.App.Logic
 {
-    public class BooksController
+    public class BooksController : Controller
     {
+        public IEnumerable<Book> Books { get; set; }
         public string Details(int id)
         {            
             var repo = new BookRepositoryCSV();
@@ -19,38 +21,29 @@ namespace Alura.ListaLeitura.App.Logic
 
         private static string LoadList(IEnumerable<Book> books)
         {
-            var fileContent = HtmlUtils.LoadFileHTML("to-read");
-
-            foreach (var book in books)
-            {
-                fileContent = fileContent.Replace("#NEW-ITEM#", $"<li>{book.Title} - {book.Author}</li>#NEW-ITEM#");
-            }
+            var fileContent = HtmlUtils.LoadFileHTML("list");            
             return fileContent.Replace("#NEW-ITEM#", "");
         }
 
-        public static Task ToRead(HttpContext context)
+        public IActionResult ToRead()
         {
             var repo = new BookRepositoryCSV();
-            var html = LoadList(repo.ToRead.Books);
-
-            return context.Response.WriteAsync(html);
+            ViewBag.Books = repo.ToRead.Books;            
+            return View("list");
         }
 
-        public static Task Reading(HttpContext context)
+        public IActionResult Reading()
         {
             var repo = new BookRepositoryCSV();
-            return context.Response.WriteAsync(repo.Reading.ToString());
+            ViewBag.Books = repo.Reading.Books;
+            return View("list");
         }
 
-        public static Task AlreadyRead(HttpContext context)
+        public IActionResult AlreadyRead()
         {
             var repo = new BookRepositoryCSV();
-            return context.Response.WriteAsync(repo.AlreadyRead.ToString());
-        }
-
-        public string Test()
-        {
-            return "Nova funcionalidade foi implementada!";
+            ViewBag.Books = repo.AlreadyRead.Books;
+            return View("list");
         }
     }
 }
